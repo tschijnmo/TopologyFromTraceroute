@@ -10,6 +10,7 @@ all the topology of the hosts that has been reached is going to be generated.
 
 import itertools
 import argparse
+import pickle
 
 from host import Host
 
@@ -68,7 +69,7 @@ class Topology(object):
         neighb = (idx1, idx2) if idx1 < idx2 else (idx2, idx1)
 
         if neighb not in self.neighbs:
-            neighbs.append(neighb)
+            self.neighbs.append(neighb)
 
     def add_chain(self, chain):
 
@@ -148,7 +149,7 @@ def main():
 
     chains = []
     for inp_name in args.inputs:
-        with open(inp_name, 'r') as inp:
+        with open(inp_name, 'rb') as inp:
             new_chain = pickle.load(inp)
         chains.extend(new_chain)
         continue
