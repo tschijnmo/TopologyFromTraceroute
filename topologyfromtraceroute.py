@@ -37,8 +37,8 @@ def get_curr_host():
 
     """Returns the Host data structure for the host that the code running on"""
 
-    hostname = subprocess.check_output(['hostname', '-f'])
-    ip = subprocess.check_output(['hostname', '-i'])
+    hostname = subprocess.check_output(['hostname', '-f']).decode('utf-8')
+    ip = subprocess.check_output(['hostname', '-i']).decode('utf-8')
 
     return Host(
         hostname=hostname.strip(),
@@ -70,10 +70,10 @@ def get_hosts_on_route(dest):
     waiting_time = 15
     max_hop = 30
     raw_out = subprocess.check_output(
-        ['traceroute', '-w', str(waiting_time), '-m', str(max_hop)]
-        )
+        ['traceroute', '-w', str(waiting_time), '-m', str(max_hop), dest]
+        ).decode('utf-8')
 
-    for line in raw_out.split('\n'):
+    for line in raw_out.split('\n')[1:-1]:
         fields = line.split()
         if fields[1] == '*':
             continue
@@ -216,7 +216,7 @@ def main():
     try:
         input_filename = sys.argv[1]
     except IndexError:
-        print "Input file name not given!"
+        print("Input file name not given!")
         raise
 
     with open(input_filename, 'r') as inp_f:
@@ -236,7 +236,7 @@ def main():
     base_name = input_filename.split('.')[0]
     host_topology.write_Pajek(
         base_name + '-host-topology.NET',
-        lambda x: "%s(%s)" % (str(x.ipaddress), x.hostname)
+        lambda x: "%s(%s)" % (str(x.ip), x.hostname)
         )
     network_topology.write_Pajek(
         base_name + '-network-topology.NET',
