@@ -25,9 +25,10 @@ def main():
     base_name = file_name.split('.')[0]
 
     net = nx.read_pajek(file_name)
-    nx.draw_graphviz(net, with_labels=True)
+    nx.draw_graphviz(net, with_labels=True, font_size=4,
+                     node_size=100)
     plt.draw()
-    plt.savefig(base_name + '.png')
+    plt.savefig(base_name + '.eps')
 
 
 if __name__ == '__main__':
