@@ -193,7 +193,7 @@ class Topology(object):
                 print(" %d \"%s\" " % (i + 1, str_fun(v)), file=out_file)
                 continue
 
-            print("*arcs", file=out_file)
+            print("*Edges", file=out_file)
             for i in self.neighbs:
                 print(" %d  %d " % (i[0] + 1, i[1] + 1), file=out_file)
                 continue
@@ -236,7 +236,7 @@ def main():
     base_name = input_filename.split('.')[0]
     host_topology.write_Pajek(
         base_name + '-host-topology.NET',
-        lambda x: "%s(%s)" % (str(x.ip), x.hostname)
+        lambda x: x.hostname
         )
     network_topology.write_Pajek(
         base_name + '-network-topology.NET',
