@@ -106,7 +106,7 @@ def main():
     chains = [get_hosts_on_route(i) for i in dests]
 
     base_name = input_filename.split('.')[0]
-    with open(base_name + '.pickle', 'w') as out_file:
+    with open(base_name + '.pickle', 'wb') as out_file:
         pickle.dump(chains, out_file)
 
     print("Chains dumped into the output file %s.pickel" % base_name)
